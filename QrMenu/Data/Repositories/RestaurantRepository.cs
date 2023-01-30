@@ -1,37 +1,40 @@
-﻿using System;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using QrMenu.Models;
 
 namespace QrMenu.Data.Repositories
 {
     public class RestaurantRepository : IRestaurantRepository
     {
-        private readonly IMongoCollection<Restaurant> _restaurants;
+        private readonly IMongoCollection<Restaurant> restaurants;
 
         public RestaurantRepository(IMongoDatabase database)
         {
-            _restaurants = database.GetCollection<Restaurant>("restaurants");
+            restaurants = database.GetCollection<Restaurant>("restaurants");
         }
 
         public async Task<List<Restaurant>> GetAllRestaurants()
         {
-            var restaurants = await _restaurants.Find(r => true).ToListAsync();
+            var restaurantList = await restaurants.Find(r => true).ToListAsync();
 
-            if (restaurants == null) return null;
+            if (restaurantList == null) return null;
 
-            return restaurants;
+            return restaurantList;
         }
 
-        public Task<Restaurant> GetRestaurant(string id)
+        public async Task<Restaurant> GetRestaurant(string id)
         {
-            return Task.FromResult(_restaurants.Find(r => r.Id == id).FirstOrDefault());
+            var restaurant = await restaurants.Find(u => u.Id == id).FirstOrDefaultAsync();
+
+            if (restaurant is null) return null;
+
+            return restaurant;
         }
 
         public async Task<bool> AddRestaurant(Restaurant restaurant)
         {
             try
             {
-                _restaurants.InsertOneAsync(restaurant);
+                await restaurants.InsertOneAsync(restaurant);
 
             }
             catch
@@ -41,16 +44,16 @@ namespace QrMenu.Data.Repositories
             return true;
         }
 
-        public Task<bool> UpdateRestaurant(string id, Restaurant restaurant)
+        public async Task<bool> UpdateRestaurant(string id, Restaurant restaurant)
         {
-            var updateResult = _restaurants.ReplaceOne(r => r.Id == id, restaurant);
-            return Task.FromResult(updateResult.IsAcknowledged);
+            var updateResult = await restaurants.ReplaceOneAsync(r => r.Id == id, restaurant);
+            return updateResult.IsAcknowledged;
         }
 
-        public Task<bool> RemoveRestaurant(string id)
+        public async Task<bool> RemoveRestaurant(string id)
         {
-            var deleteResult = _restaurants.DeleteOne(r => r.Id == id);
-            return Task.FromResult(deleteResult.IsAcknowledged);
+            var deleteResult = await restaurants.DeleteOneAsync(r => r.Id == id);
+            return deleteResult.IsAcknowledged;
         }
     }
 }
