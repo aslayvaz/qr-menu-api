@@ -15,6 +15,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.26.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,9 @@
     <None Remove="Utils\Mapping\" />
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Utils\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -39,5 +44,6 @@
     <Folder Include="Utils\" />
     <Folder Include="Data\Repositories\" />
     <Folder Include="Utils\Mapping\" />
+    <Folder Include="Utils\Auth\" />
   </ItemGroup>
 </Project>

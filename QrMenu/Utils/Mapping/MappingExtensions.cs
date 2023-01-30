@@ -14,6 +14,7 @@ namespace QrMenu.Utils.Mapping
             {
                 cfg.CreateMap<User, UserViewModel>();
                 cfg.CreateMap<UserInsertModel, User>();
+                cfg.CreateMap<User, UserAuthViewModel>(); 
                 //cfg.CreateMap<Restaurant, RestaurantViewModel>();
                 //Add more mappings as needed
             });

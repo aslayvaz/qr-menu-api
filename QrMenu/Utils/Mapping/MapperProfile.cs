@@ -23,6 +23,14 @@ namespace QrMenu.Utils.Mapping
             CreateMap<UserInsertModel, UserViewModel>()
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
+            CreateMap<User, UserAuthViewModel>()
+           .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+           .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
+           .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+           .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.IsAdmin ? "Admin" : "User")) // TODO FIX
+           .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => src.CreateDate));
+
         }
     }
 }

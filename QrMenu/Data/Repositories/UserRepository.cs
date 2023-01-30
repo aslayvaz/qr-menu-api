@@ -63,6 +63,15 @@ namespace QrMenu.Data.Repositories
             var updateUser = await users.ReplaceOneAsync(u => u.Id == id, user);
             return updateUser.IsAcknowledged;
         }
+
+        public async Task<User> GetUserByUsername(string username)
+        {
+            var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
+
+            if (user is null) return null;
+
+            return user;
+        }
     }
 }
 

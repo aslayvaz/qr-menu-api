@@ -1,6 +1,7 @@
 ﻿using QrMenu.Data.Repositories;
 using QrMenu.Models;
 using QrMenu.Utils;
+using QrMenu.Utils.Auth;
 using QrMenu.Utils.Mapping;
 using QrMenu.ViewModels;
 
@@ -9,10 +10,14 @@ namespace QrMenu.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IPasswordHasher passwordHasher;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(
+            IUserRepository userRepository,
+            IPasswordHasher passwordHasher)
         {
             this.userRepository = userRepository;
+            this.passwordHasher = passwordHasher;
         }
 
         public async Task<List<UserViewModel>> GetAllUsers()
@@ -37,6 +42,8 @@ namespace QrMenu.Services
         public async Task<bool> AddUser(UserInsertModel insertModel)
         {
             var user = insertModel.Map<UserInsertModel,User>();
+
+            user.Password = passwordHasher.HashPassword(user.Password);
 
             user.CreateDate = System.DateTime.Now.TrimMilliseconds();
 
