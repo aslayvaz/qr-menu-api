@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using QrMenu.Data.Repositories;
 using QrMenu.Services;
+using QrMenu.Utils.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,12 +15,15 @@ var connectionString = config.GetConnectionString("mongodb");
 
 builder.Services.AddSingleton(new MongoClient(connectionString));
 
-builder.Services.AddScoped(provider => provider
-        .GetService<MongoClient>()
-        .GetDatabase("qr-menu"));
+builder.Services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase("qr-menu"));
 
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 
 builder.Services.AddControllers();
