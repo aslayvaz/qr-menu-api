@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using QrMenu.Models;
+using QrMenu.Models.Auth;
 
 namespace QrMenu.Utils.Auth
 {
@@ -15,10 +16,11 @@ namespace QrMenu.Utils.Auth
             this.configuration = configuration;
         }
 
-        public string GenerateToken(User user)
+        public GenerateTokenResponse GenerateToken(User user)
         {
             // Get the JWT token configuration from the appsettings.json.
-            var jwtConfig = configuration.GetSection("Jwt").Get<JwtConfig>();
+            var jwtConfig = new JwtConfig();
+            configuration.GetSection("Jwt").Bind(jwtConfig);
 
             // Create the JWT token.
             var claims = new List<Claim>
@@ -28,17 +30,25 @@ namespace QrMenu.Utils.Auth
                 new Claim(ClaimTypes.Role, user.IsAdmin ? "admin" : "user")
                 };
 
+            DateTime dateNow = DateTime.Now;
+
             var token = new JwtSecurityToken(
                 issuer: jwtConfig.Issuer,
                 audience: jwtConfig.Audience,
                 claims: claims,
-                expires: DateTime.Now.AddDays(jwtConfig.ExpiresInDays),
+                notBefore:dateNow,
+                expires: dateNow.AddDays(jwtConfig.ExpiresInDays),
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret)),
                     SecurityAlgorithms.HmacSha256)
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new GenerateTokenResponse
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                TokenExpireDate = dateNow.AddDays(jwtConfig.ExpiresInDays)
+            };
+            
         }
     }
 }

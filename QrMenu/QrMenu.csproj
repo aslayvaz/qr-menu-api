@@ -36,6 +36,9 @@
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
     <None Remove="Utils\Auth\" />
+    <None Remove="ViewModels\Auth\" />
+    <None Remove="ViewModels\User\" />
+    <None Remove="Models\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -46,5 +49,8 @@
     <Folder Include="Data\Repositories\" />
     <Folder Include="Utils\Mapping\" />
     <Folder Include="Utils\Auth\" />
+    <Folder Include="ViewModels\Auth\" />
+    <Folder Include="ViewModels\User\" />
+    <Folder Include="Models\Auth\" />
   </ItemGroup>
 </Project>

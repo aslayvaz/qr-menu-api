@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QrMenu.Services;
-using QrMenu.ViewModels;
+using QrMenu.ViewModels.User;
 
 namespace QrMenu.Controllers
 {
@@ -15,7 +15,7 @@ namespace QrMenu.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest model)
         {
             var result = await authenticatorService.Login(model.Username, model.Password);
 

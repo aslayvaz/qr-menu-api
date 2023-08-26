@@ -15,7 +15,9 @@ var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
     .Build();
 //add jwt services
-var jwtSecret = builder.Configuration["Jwt:Secret"];
+var jwtConfig = new JwtConfig(); 
+builder.Configuration.GetSection("Jwt").Bind(jwtConfig);//bind user-secrets to a model for usage.
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
    .AddJwtBearer(options =>
    {
@@ -25,10 +27,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            ValidateAudience = true,
            ValidateLifetime = true,
            ValidateIssuerSigningKey = true,
-           ValidIssuer = config.GetValue<string>("Jwt:Issuer"),
-           ValidAudience = config.GetValue<string>("Jwt:Audience"),
+           ValidIssuer = jwtConfig.Issuer,
+           ValidAudience = jwtConfig.Audience,
            IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(jwtSecret))
+            (Encoding.UTF8.GetBytes(jwtConfig.Secret))
        };
    });
 

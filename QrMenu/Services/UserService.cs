@@ -3,7 +3,7 @@ using QrMenu.Models;
 using QrMenu.Utils;
 using QrMenu.Utils.Auth;
 using QrMenu.Utils.Mapping;
-using QrMenu.ViewModels;
+using QrMenu.ViewModels.User;
 
 namespace QrMenu.Services
 {
@@ -20,28 +20,28 @@ namespace QrMenu.Services
             this.passwordHasher = passwordHasher;
         }
 
-        public async Task<List<UserViewModel>> GetAllUsers()
+        public async Task<List<UserView>> GetAllUsers()
         {
             var userList = await userRepository.GetAllUsers();
 
-            var userListMapped = userList.Map<List<User>, List<UserViewModel>>();
+            var userListMapped = userList.Map<List<User>, List<UserView>>();
 
             return userListMapped;
         }
 
-        public async Task<UserViewModel> GetUserById(string id)
+        public async Task<UserView> GetUserById(string id)
         {
-            return (await userRepository.GetUserById(id)).Map<User, UserViewModel>();
+            return (await userRepository.GetUserById(id)).Map<User, UserView>();
         }
 
-        public async Task<UserViewModel> GetUserByEmail(string email)
+        public async Task<UserView> GetUserByEmail(string email)
         {
-            return (await userRepository.GetUserByEmail(email)).Map<User, UserViewModel>();
+            return (await userRepository.GetUserByEmail(email)).Map<User, UserView>();
 
         }
-        public async Task<bool> AddUser(UserInsertModel insertModel)
+        public async Task<bool> AddUser(UserInsert insertModel)
         {
-            var user = insertModel.Map<UserInsertModel,User>();
+            var user = insertModel.Map<UserInsert,User>();
 
             user.Password = passwordHasher.HashPassword(user.Password);
 

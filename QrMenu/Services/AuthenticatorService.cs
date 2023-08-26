@@ -2,7 +2,7 @@
 using QrMenu.Models;
 using QrMenu.Utils.Auth;
 using QrMenu.Utils.Mapping;
-using QrMenu.ViewModels;
+using QrMenu.ViewModels.User;
 
 namespace QrMenu.Services
 {
@@ -22,7 +22,7 @@ namespace QrMenu.Services
             this.passwordHasher = passwordHasher;
         }
 
-        public async Task<UserAuthViewModel> Login(string username, string password)
+        public async Task<UserLoginResponse> Login(string username, string password)
         {
             var user = await userRepository.GetUserByUsername(username);
 
@@ -32,8 +32,9 @@ namespace QrMenu.Services
 
             if (isAuth)
             {
-                var authUser = user.Map<User, UserAuthViewModel>();
-                authUser.Token = jwtTokenGenerator.GenerateToken(user);
+                var authUser = user.Map<User, UserLoginResponse>();
+                var token = jwtTokenGenerator.GenerateToken(user);
+                authUser.AuthToken = token;
                 return authUser;
             }
             return null;

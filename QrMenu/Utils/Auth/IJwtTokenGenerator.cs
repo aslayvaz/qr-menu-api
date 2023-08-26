@@ -1,9 +1,10 @@
 ﻿using QrMenu.Models;
+using QrMenu.Models.Auth;
 
 namespace QrMenu.Utils.Auth
 {
     public interface IJwtTokenGenerator
     {
-        string GenerateToken(User user);
+        GenerateTokenResponse GenerateToken(User user);
     }
 }

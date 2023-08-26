@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QrMenu.Models;
 using QrMenu.Services;
-using QrMenu.ViewModels;
+using QrMenu.ViewModels.User;
 
 namespace QrMenu.Controllers
 {
@@ -34,7 +34,7 @@ namespace QrMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] UserInsertModel user)
+        public async Task<IActionResult> Add([FromBody] UserInsert user)
         {
             var result = await userService.AddUser(user);
 

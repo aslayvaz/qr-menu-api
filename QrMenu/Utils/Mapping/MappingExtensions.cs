@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using QrMenu.Models;
-using QrMenu.ViewModels;
+using QrMenu.ViewModels.User;
 
 namespace QrMenu.Utils.Mapping
 {
@@ -12,9 +12,9 @@ namespace QrMenu.Utils.Mapping
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserViewModel>();
-                cfg.CreateMap<UserInsertModel, User>();
-                cfg.CreateMap<User, UserAuthViewModel>(); 
+                cfg.CreateMap<User, UserView>();
+                cfg.CreateMap<UserInsert, User>();
+                cfg.CreateMap<User, UserLoginResponse>(); 
                 //cfg.CreateMap<Restaurant, RestaurantViewModel>();
                 //Add more mappings as needed
             });

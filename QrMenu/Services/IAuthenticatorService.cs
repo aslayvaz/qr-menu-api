@@ -1,10 +1,10 @@
-﻿using QrMenu.ViewModels;
+﻿using QrMenu.ViewModels.User;
 
 namespace QrMenu.Services
 {
     public interface IAuthenticatorService
 	{
-		Task<UserAuthViewModel> Login(string user, string password);
+		Task<UserLoginResponse> Login(string user, string password);
 	}
 }
 
