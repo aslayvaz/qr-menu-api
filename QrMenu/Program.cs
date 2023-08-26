@@ -10,29 +10,36 @@ using QrMenu.Utils.Mapping;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
     .Build();
-//add jwt services
-var jwtConfig = new JwtConfig(); 
+
+//add jwt
+var jwtConfig = new JwtConfig();
+
 builder.Configuration.GetSection("Jwt").Bind(jwtConfig);//bind user-secrets to a model for usage.
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-   .AddJwtBearer(options =>
-   {
-       options.TokenValidationParameters = new TokenValidationParameters
-       {
-           ValidateIssuer = true,
-           ValidateAudience = true,
-           ValidateLifetime = true,
-           ValidateIssuerSigningKey = true,
-           ValidIssuer = jwtConfig.Issuer,
-           ValidAudience = jwtConfig.Audience,
-           IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(jwtConfig.Secret))
-       };
-   });
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtConfig.Issuer,
+            ValidAudience = jwtConfig.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey
+             (Encoding.UTF8.GetBytes(jwtConfig.Secret))
+        };
+    });
 
 
 //mongo db connection
@@ -75,6 +82,8 @@ app.UseCors(config =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

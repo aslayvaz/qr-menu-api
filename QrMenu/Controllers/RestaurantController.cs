@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QrMenu.Models;
 using QrMenu.Services;
 
 namespace QrMenu.Controllers
 {
+    [Authorize(Roles = "admin")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class RestaurantController:ControllerBase
 	{
         private readonly IRestaurantService restaurantService;
@@ -15,6 +17,7 @@ namespace QrMenu.Controllers
             this.restaurantService = restaurantService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -22,6 +25,7 @@ namespace QrMenu.Controllers
             return Ok(restaurants);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {

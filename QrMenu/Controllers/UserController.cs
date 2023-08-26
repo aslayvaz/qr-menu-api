@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QrMenu.Models;
 using QrMenu.Services;
 using QrMenu.ViewModels.User;
 
 namespace QrMenu.Controllers
 {
+    [Authorize(Roles = "admin")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QrMenu.Services;
 using QrMenu.ViewModels.User;
 
@@ -14,6 +15,7 @@ namespace QrMenu.Controllers
             this.authenticatorService = authenticatorService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest model)
         {
