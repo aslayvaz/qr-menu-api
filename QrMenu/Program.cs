@@ -15,6 +15,7 @@ var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false)
     .Build();
 //add jwt services
+var jwtSecret = builder.Configuration["Jwt:Secret"];
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
    .AddJwtBearer(options =>
    {
@@ -27,13 +28,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            ValidIssuer = config.GetValue<string>("Jwt:Issuer"),
            ValidAudience = config.GetValue<string>("Jwt:Audience"),
            IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(config.GetValue<string>("Jwt:Secret")))
+            (Encoding.UTF8.GetBytes(jwtSecret))
        };
    });
 
 
 //mongo db connection
-var connectionString = config.GetConnectionString("mongodb");
+var connectionString = builder.Configuration["ConnectionStrings:mongodb"];
 builder.Services.AddSingleton(new MongoClient(connectionString));
 builder.Services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase("qr-menu"));
 
