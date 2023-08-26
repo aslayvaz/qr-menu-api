@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using MongoDB.Driver;
 using QrMenu.Data.Repositories;
 using QrMenu.Services;
-using QrMenu.Utils.Mapping;
 using QrMenu.Utils.Auth;
+using QrMenu.Utils.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 

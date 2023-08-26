@@ -6,8 +6,8 @@ using QrMenu.ViewModels;
 
 namespace QrMenu.Services
 {
-    public class AuthenticatorService:IAuthenticatorService
-	{
+    public class AuthenticatorService : IAuthenticatorService
+    {
         private readonly IUserRepository userRepository;
         private readonly IJwtTokenGenerator jwtTokenGenerator;
         private readonly IPasswordHasher passwordHasher;
@@ -28,8 +28,7 @@ namespace QrMenu.Services
 
             if (user is null) return null;
 
-            string hash = passwordHasher.HashPassword(password);
-            bool isAuth = passwordHasher.VerifyPassword(hash, password);
+            bool isAuth = passwordHasher.VerifyPassword(user.Password, password);
 
             if (isAuth)
             {
