@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QrMenu.Models;
-using QrMenu.Services;
+using QrMenu.Models.Restaurant;
+using QrMenu.Services.Restaurant;
+using QrMenu.ViewModels.Restaurant;
 
 namespace QrMenu.Controllers
 {
     [Authorize(Roles = "admin")]
     [ApiController]
     [Route("api/[controller]")]
-    public class RestaurantController:ControllerBase
-	{
+    public class RestaurantController : ControllerBase
+    {
         private readonly IRestaurantService restaurantService;
 
         public RestaurantController(IRestaurantService restaurantService)
@@ -37,14 +38,17 @@ namespace QrMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Restaurant restaurant)
+        public async Task<IActionResult> Add([FromBody] RestaurantInsert restaurant)
         {
-            await restaurantService.AddRestaurant(restaurant);
-            return CreatedAtAction(nameof(Get), new { id = restaurant.Id }, restaurant);
+            var result = await restaurantService.AddRestaurant(restaurant);
+
+            if (result is null) return BadRequest();
+
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] Restaurant restaurant)
+        public async Task<IActionResult> Update(string id, [FromBody] RestaurantDatabaseModel restaurant)
         {
             var result = await restaurantService.UpdateRestaurant(id, restaurant);
             if (!result)
@@ -57,6 +61,16 @@ namespace QrMenu.Controllers
         public async Task<IActionResult> Remove(string id)
         {
             var result = await restaurantService.RemoveRestaurant(id);
+            if (!result)
+                return NotFound();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveAll()
+        {
+            var result = await restaurantService.RemoveAllRestaurant();
             if (!result)
                 return NotFound();
 

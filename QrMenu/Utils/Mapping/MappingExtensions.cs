@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using QrMenu.Models;
+using QrMenu.Models.Restaurant;
+using QrMenu.Models.User;
+using QrMenu.ViewModels.Restaurant;
 using QrMenu.ViewModels.User;
 
 namespace QrMenu.Utils.Mapping
@@ -12,10 +14,17 @@ namespace QrMenu.Utils.Mapping
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserView>();
-                cfg.CreateMap<UserInsert, User>();
-                cfg.CreateMap<User, UserLoginResponse>(); 
-                //cfg.CreateMap<Restaurant, RestaurantViewModel>();
+                //users
+                cfg.CreateMap<UserDatabaseModel, UserView>();
+                cfg.CreateMap<UserInsert, UserDatabaseModel>();
+                cfg.CreateMap<UserDatabaseModel, UserLoginResponse>();
+                cfg.CreateMap<UserRegisterRequest, UserDatabaseModel>();
+                cfg.CreateMap<UserDatabaseModel, UserRegisterResponse>();
+
+                // restaurants
+                cfg.CreateMap<RestaurantInsert, RestaurantDatabaseModel>();
+                cfg.CreateMap<RestaurantDatabaseModel, RestaurantView>();
+
                 //Add more mappings as needed
             });
 
@@ -30,8 +39,5 @@ namespace QrMenu.Utils.Mapping
         {
             return _mapper.Map<List<TDestination>>(fromList);
         }
-
     }
-
 }
-

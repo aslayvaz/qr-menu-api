@@ -1,10 +1,9 @@
-﻿using System;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace QrMenu.Models
+namespace QrMenu.Models.User
 {
-    public class User
+    public class UserDatabaseModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -25,11 +24,16 @@ namespace QrMenu.Models
         [BsonElement("isActive")]
         public bool IsActive { get; set; }
 
+        [BsonElement("isMailConfirmed")]
+        public bool IsMailConfirmed { get; set; }
+
         [BsonElement("create_date")]
-        public DateTime? CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; } = DateTime.Now;
 
         [BsonElement("last_edit_date")]
         public DateTime? LastEditDate { get; set; }
+
+
 
     }
 

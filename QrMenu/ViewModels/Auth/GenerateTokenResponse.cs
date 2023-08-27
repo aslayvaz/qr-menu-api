@@ -1,4 +1,4 @@
-﻿namespace QrMenu.Models.Auth
+﻿namespace QrMenu.ViewModels.Auth
 {
     public class GenerateTokenResponse
     {

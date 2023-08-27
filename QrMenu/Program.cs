@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using QrMenu.Data.Repositories;
-using QrMenu.Services;
+using QrMenu.Services.Auth;
+using QrMenu.Services.Mail;
+using QrMenu.Services.Restaurant;
+using QrMenu.Services.User;
 using QrMenu.Utils.Auth;
+using QrMenu.Utils.Database;
 using QrMenu.Utils.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,25 +45,33 @@ builder.Services
         };
     });
 
-
 //mongo db connection
-var connectionString = builder.Configuration["ConnectionStrings:mongodb"];
-builder.Services.AddSingleton(new MongoClient(connectionString));
-builder.Services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase("qr-menu"));
+var mongoConfig = new MongoDbConfig();
+builder.Configuration.GetSection("MongoDb").Bind(mongoConfig);//bind user-secrets to a model for usage.
+
+builder.Services.AddSingleton(new MongoClient(mongoConfig.ConnectionString));
+builder.Services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase(mongoConfig.DatabaseName));
 
 // dependency injections
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthenticatorService, AuthenticatorService>();
+
+builder.Services.AddScoped<IConfirmCodesRepository, ConfirmCodesRepository>();
+builder.Services.AddScoped<IMailService, MailService>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 //automapper
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

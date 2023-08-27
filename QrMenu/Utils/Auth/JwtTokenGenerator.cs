@@ -2,8 +2,8 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using QrMenu.Models;
-using QrMenu.Models.Auth;
+using QrMenu.Models.User;
+using QrMenu.ViewModels.Auth;
 
 namespace QrMenu.Utils.Auth
 {
@@ -16,7 +16,7 @@ namespace QrMenu.Utils.Auth
             this.configuration = configuration;
         }
 
-        public GenerateTokenResponse GenerateToken(User user)
+        public GenerateTokenResponse GenerateToken(UserDatabaseModel user)
         {
             // Get the JWT token configuration from the appsettings.json.
             var jwtConfig = new JwtConfig();

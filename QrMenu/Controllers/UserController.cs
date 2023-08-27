@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QrMenu.Models;
-using QrMenu.Services;
+using QrMenu.Models.User;
+using QrMenu.Services.User;
 using QrMenu.ViewModels.User;
 
 namespace QrMenu.Controllers
@@ -46,7 +46,7 @@ namespace QrMenu.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] User user)
+        public async Task<IActionResult> Update(string id, [FromBody] UserDatabaseModel user)
         {
             var result = await userService.UpdateUser(id, user);
 
