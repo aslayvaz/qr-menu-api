@@ -1,6 +1,7 @@
 ﻿using QrMenu.Data.Repositories;
 using QrMenu.Models.Restaurant;
 using QrMenu.Utils.Mapping;
+using QrMenu.ViewModels.Restaurant;
 
 namespace QrMenu.Services
 {
@@ -13,11 +14,11 @@ namespace QrMenu.Services
             this.restaurantRepository = restaurantRepository;
         }
 
-        public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
+        public async Task<IEnumerable<RestaurantView>> GetAllRestaurants()
         {
             var restaurants = await restaurantRepository.GetAllRestaurants();
 
-            return restaurants;
+            return restaurants.Map<List<Restaurant>, List<RestaurantView>>();
         }
 
         public async Task<Restaurant> GetRestaurant(string id)
@@ -33,14 +34,7 @@ namespace QrMenu.Services
 
             if (exists is not null) return null;
 
-            //var restaurant = insertModel.Map<RestaurantInsert, Restaurant>();
-            //TODO fix mapping not working
-            var restaurant = new Restaurant
-            {
-                RestaurantName = insertModel.Name,
-                MenuLink = insertModel.Menu,
-                Website = insertModel.Web
-            };
+            var restaurant = insertModel.Map<RestaurantInsert, Restaurant>();
 
             restaurant.CreateTime = DateTime.Now;
 
@@ -61,6 +55,11 @@ namespace QrMenu.Services
             return await restaurantRepository.RemoveRestaurant(id);
         }
 
+        public async Task<bool> RemoveAllRestaurant()
+        {
+            return false;
+            return await restaurantRepository.RemoveAllRestaurant();
+        }
     }
 }
 

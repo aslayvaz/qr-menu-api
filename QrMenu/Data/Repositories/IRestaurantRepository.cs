@@ -10,6 +10,7 @@ namespace QrMenu.Data.Repositories
         Task<bool> UpdateRestaurant(string id, Restaurant restaurant);
         Task<bool> RemoveRestaurant(string id);
         Task<Restaurant> GetRestaurantByName(string name);
+        Task<bool> RemoveAllRestaurant();
     }
 
 }

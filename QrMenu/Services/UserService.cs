@@ -41,6 +41,10 @@ namespace QrMenu.Services
         }
         public async Task<bool> AddUser(UserInsert insertModel)
         {
+            var existUser = await userRepository.GetUserByUsername(insertModel.Username);
+
+            if (existUser is not null) return false;
+
             var user = insertModel.Map<UserInsert, User>();
 
             user.Password = passwordHasher.HashPassword(user.Password);

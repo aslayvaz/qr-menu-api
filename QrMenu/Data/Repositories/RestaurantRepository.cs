@@ -59,11 +59,17 @@ namespace QrMenu.Data.Repositories
 
         public async Task<Restaurant> GetRestaurantByName(string name)
         {
-            var restaurant = await restaurants.Find(u => u.RestaurantName == name).FirstOrDefaultAsync();
+            var restaurant = await restaurants.Find(u => u.Name == name).FirstOrDefaultAsync();
 
             if (restaurant is null) return null;
 
             return restaurant;
+        }
+
+        public async Task<bool> RemoveAllRestaurant()
+        {
+            var deleteResult = await restaurants.DeleteManyAsync(Builders<Restaurant>.Filter.Empty);
+            return deleteResult.IsAcknowledged;
         }
     }
 }

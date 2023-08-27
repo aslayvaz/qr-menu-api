@@ -50,16 +50,20 @@ builder.Services.AddScoped(provider => provider.GetService<MongoClient>().GetDat
 // dependency injections
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddScoped<IAuthenticatorService, AuthenticatorService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
 //automapper
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

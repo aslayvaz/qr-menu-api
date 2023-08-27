@@ -39,9 +39,11 @@ namespace QrMenu.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] RestaurantInsert restaurant)
         {
-            var addedRestaurant = await restaurantService.AddRestaurant(restaurant);
+            var result = await restaurantService.AddRestaurant(restaurant);
 
-            return CreatedAtAction(nameof(Get), new { id = addedRestaurant.Id }, addedRestaurant);
+            if (result is null) return BadRequest();
+
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
@@ -58,6 +60,16 @@ namespace QrMenu.Controllers
         public async Task<IActionResult> Remove(string id)
         {
             var result = await restaurantService.RemoveRestaurant(id);
+            if (!result)
+                return NotFound();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveAll()
+        {
+            var result = await restaurantService.RemoveAllRestaurant();
             if (!result)
                 return NotFound();
 

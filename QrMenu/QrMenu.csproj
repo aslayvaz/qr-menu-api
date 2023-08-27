@@ -41,6 +41,7 @@
     <None Remove="Models\Auth\" />
     <None Remove="Models\Restaurant\" />
     <None Remove="Models\User\" />
+    <None Remove="ViewModels\Restaurant\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -56,5 +57,6 @@
     <Folder Include="Models\Auth\" />
     <Folder Include="Models\Restaurant\" />
     <Folder Include="Models\User\" />
+    <Folder Include="ViewModels\Restaurant\" />
   </ItemGroup>
 </Project>
