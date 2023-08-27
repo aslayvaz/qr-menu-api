@@ -1,31 +1,36 @@
 ﻿using QrMenu.Data.Repositories;
 using QrMenu.Models.ConfirmCode;
 using QrMenu.Models.User;
+using QrMenu.Services.Mail;
 using QrMenu.Utils;
 using QrMenu.Utils.Auth;
+using QrMenu.Utils.Mail;
 using QrMenu.Utils.Mapping;
 using QrMenu.ViewModels.Auth;
 using QrMenu.ViewModels.User;
 
-namespace QrMenu.Services
+namespace QrMenu.Services.Auth
 {
-    public class AuthenticatorService : IAuthenticatorService
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository userRepository;
         private readonly IJwtTokenGenerator jwtTokenGenerator;
         private readonly IPasswordHasher passwordHasher;
         private readonly IConfirmCodesRepository confirmCodesRepository;
+        private readonly IMailService mailService;
 
-        public AuthenticatorService(
+        public AuthService(
             IUserRepository userRepository,
             IJwtTokenGenerator jwtTokenGenerator,
             IPasswordHasher passwordHasher,
-            IConfirmCodesRepository confirmCodesRepository)
+            IConfirmCodesRepository confirmCodesRepository,
+            IMailService mailService)
         {
             this.userRepository = userRepository;
             this.jwtTokenGenerator = jwtTokenGenerator;
             this.passwordHasher = passwordHasher;
             this.confirmCodesRepository = confirmCodesRepository;
+            this.mailService = mailService;
         }
 
         public async Task<UserLoginResponse> Login(string username, string password)
@@ -38,7 +43,7 @@ namespace QrMenu.Services
 
             if (isAuth && user.IsMailConfirmed)
             {
-                var authUser = user.Map<User, UserLoginResponse>();
+                var authUser = user.Map<UserDatabaseModel, UserLoginResponse>();
                 var token = jwtTokenGenerator.GenerateToken(user);
                 authUser.AuthToken = token;
                 authUser.Success = true;
@@ -54,7 +59,7 @@ namespace QrMenu.Services
 
             if (existUser != null && existUser.IsActive) return null;
 
-            var user = userRegister.Map<UserRegisterRequest, User>();
+            var user = userRegister.Map<UserRegisterRequest, UserDatabaseModel>();
 
             user.Password = passwordHasher.HashPassword(user.Password);
 
@@ -69,7 +74,9 @@ namespace QrMenu.Services
             };
             await confirmCodesRepository.InsertConfirmCode(confirmCode);
 
-            var response = insert.Map<User, UserRegisterResponse>();
+            await SendConfirmMail(confirmCode.Code, userRegister.Username, userRegister.Email);
+
+            var response = insert.Map<UserDatabaseModel, UserRegisterResponse>();
 
             return response;
         }
@@ -102,6 +109,15 @@ namespace QrMenu.Services
             var random = new Random();
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private async Task SendConfirmMail(string code, string username, string email)
+        {
+            var mailContent = new MailConfirmCodeDraft(code, username);
+
+            string subject = mailContent.Subject;
+            string body = mailContent.Body;
+            await mailService.SendEmailAsync(email, subject, body);
         }
     }
 }

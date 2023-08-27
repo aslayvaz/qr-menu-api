@@ -1,4 +1,4 @@
-﻿using QrMenu.Models.Auth;
+﻿using QrMenu.ViewModels.Auth;
 
 namespace QrMenu.ViewModels.User
 {

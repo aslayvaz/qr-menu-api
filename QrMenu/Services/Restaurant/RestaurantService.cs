@@ -3,7 +3,7 @@ using QrMenu.Models.Restaurant;
 using QrMenu.Utils.Mapping;
 using QrMenu.ViewModels.Restaurant;
 
-namespace QrMenu.Services
+namespace QrMenu.Services.Restaurant
 {
     public class RestaurantService : IRestaurantService
     {
@@ -18,30 +18,30 @@ namespace QrMenu.Services
         {
             var restaurants = await restaurantRepository.GetAllRestaurants();
 
-            return restaurants.Map<List<Restaurant>, List<RestaurantView>>();
+            return restaurants.Map<List<RestaurantDatabaseModel>, List<RestaurantView>>();
         }
 
-        public async Task<Restaurant> GetRestaurant(string id)
+        public async Task<RestaurantDatabaseModel> GetRestaurant(string id)
         {
             var restaurant = await restaurantRepository.GetRestaurant(id);
 
             return restaurant;
         }
 
-        public async Task<Restaurant> AddRestaurant(RestaurantInsert insertModel)
+        public async Task<RestaurantDatabaseModel> AddRestaurant(RestaurantInsert insertModel)
         {
             var exists = await restaurantRepository.GetRestaurantByName(insertModel.Name);
 
             if (exists is not null) return null;
 
-            var restaurant = insertModel.Map<RestaurantInsert, Restaurant>();
+            var restaurant = insertModel.Map<RestaurantInsert, RestaurantDatabaseModel>();
 
             restaurant.CreateTime = DateTime.Now;
 
             return await restaurantRepository.AddRestaurant(restaurant);
         }
 
-        public async Task<bool> UpdateRestaurant(string id, Restaurant restaurant)
+        public async Task<bool> UpdateRestaurant(string id, RestaurantDatabaseModel restaurant)
         {
             var notExists = await restaurantRepository.GetRestaurant(restaurant.Id) == null;
 

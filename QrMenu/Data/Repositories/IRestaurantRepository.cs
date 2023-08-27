@@ -4,12 +4,12 @@ namespace QrMenu.Data.Repositories
 {
     public interface IRestaurantRepository
     {
-        Task<List<Restaurant>> GetAllRestaurants();
-        Task<Restaurant> GetRestaurant(string id);
-        Task<Restaurant> AddRestaurant(Restaurant restaurant);
-        Task<bool> UpdateRestaurant(string id, Restaurant restaurant);
+        Task<List<RestaurantDatabaseModel>> GetAllRestaurants();
+        Task<RestaurantDatabaseModel> GetRestaurant(string id);
+        Task<RestaurantDatabaseModel> AddRestaurant(RestaurantDatabaseModel restaurant);
+        Task<bool> UpdateRestaurant(string id, RestaurantDatabaseModel restaurant);
         Task<bool> RemoveRestaurant(string id);
-        Task<Restaurant> GetRestaurantByName(string name);
+        Task<RestaurantDatabaseModel> GetRestaurantByName(string name);
         Task<bool> RemoveAllRestaurant();
     }
 

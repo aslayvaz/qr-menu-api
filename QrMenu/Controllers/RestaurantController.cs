@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QrMenu.Models.Restaurant;
-using QrMenu.Services;
+using QrMenu.Services.Restaurant;
+using QrMenu.ViewModels.Restaurant;
 
 namespace QrMenu.Controllers
 {
@@ -47,7 +48,7 @@ namespace QrMenu.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] Restaurant restaurant)
+        public async Task<IActionResult> Update(string id, [FromBody] RestaurantDatabaseModel restaurant)
         {
             var result = await restaurantService.UpdateRestaurant(id, restaurant);
             if (!result)

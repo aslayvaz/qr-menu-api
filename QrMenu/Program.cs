@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using QrMenu.Data.Repositories;
-using QrMenu.Services;
+using QrMenu.Services.Auth;
+using QrMenu.Services.Mail;
+using QrMenu.Services.Restaurant;
+using QrMenu.Services.User;
 using QrMenu.Utils.Auth;
 using QrMenu.Utils.Database;
 using QrMenu.Utils.Mapping;
@@ -57,8 +60,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IConfirmCodesRepository, ConfirmCodesRepository>();
+builder.Services.AddScoped<IMailService, MailService>();
 
-builder.Services.AddScoped<IAuthenticatorService, AuthenticatorService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

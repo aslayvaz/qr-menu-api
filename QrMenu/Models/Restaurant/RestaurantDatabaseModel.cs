@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace QrMenu.Models.Restaurant
 {
-    public class Restaurant
+    public class RestaurantDatabaseModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

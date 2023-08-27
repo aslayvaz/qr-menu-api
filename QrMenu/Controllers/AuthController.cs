@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QrMenu.Services;
+using QrMenu.Services.Auth;
 using QrMenu.ViewModels.Auth;
 using QrMenu.ViewModels.User;
 
@@ -8,17 +8,13 @@ namespace QrMenu.Controllers
 {
     [Route("api")]
     [ApiController]
-    public class AuthenticatorController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly IAuthenticatorService authenticatorService;
-        private readonly IUserService userService;
+        private readonly IAuthService authenticatorService;
 
-        public AuthenticatorController(
-            IAuthenticatorService authenticatorService,
-            IUserService userService)
+        public AuthController(IAuthService authenticatorService)
         {
             this.authenticatorService = authenticatorService;
-            this.userService = userService;
         }
 
         [AllowAnonymous]
@@ -30,6 +26,7 @@ namespace QrMenu.Controllers
             if (result is null) return BadRequest("Invalid credentials");
             else return Ok(result);
         }
+
         [AllowAnonymous]
         [Route("register")]
         [HttpPost]
@@ -37,10 +34,11 @@ namespace QrMenu.Controllers
         {
             var result = await authenticatorService.Register(userRegister);
 
-            if (result==null) return BadRequest();
+            if (result == null) return BadRequest();
 
             return Ok(result);
         }
+
         [AllowAnonymous]
         [Route("confirm-email")]
         [HttpPost]
@@ -52,6 +50,7 @@ namespace QrMenu.Controllers
 
             return Ok(result);
         }
+
     }
 }
 

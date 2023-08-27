@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace QrMenu.Models.User
 {
-    public class User
+    public class UserDatabaseModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -19,13 +19,13 @@ namespace QrMenu.Models.User
         public string? Email { get; set; }
 
         [BsonElement("isAdmin")]
-        public bool IsAdmin { get; set; } = false;
+        public bool IsAdmin { get; set; }
 
         [BsonElement("isActive")]
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; }
 
         [BsonElement("isMailConfirmed")]
-        public bool IsMailConfirmed { get; set; } = false;
+        public bool IsMailConfirmed { get; set; }
 
         [BsonElement("create_date")]
         public DateTime? CreateDate { get; set; } = DateTime.Now;

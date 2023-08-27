@@ -38,12 +38,16 @@
     <None Remove="Utils\Auth\" />
     <None Remove="ViewModels\Auth\" />
     <None Remove="ViewModels\User\" />
-    <None Remove="Models\Auth\" />
     <None Remove="Models\Restaurant\" />
     <None Remove="Models\User\" />
     <None Remove="ViewModels\Restaurant\" />
     <None Remove="Models\ConfirmCode\" />
     <None Remove="Utils\Database\" />
+    <None Remove="Services\Mail\" />
+    <None Remove="Utils\Mail\" />
+    <None Remove="Services\User\" />
+    <None Remove="Services\Restaurant\" />
+    <None Remove="Services\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -56,11 +60,15 @@
     <Folder Include="Utils\Auth\" />
     <Folder Include="ViewModels\Auth\" />
     <Folder Include="ViewModels\User\" />
-    <Folder Include="Models\Auth\" />
     <Folder Include="Models\Restaurant\" />
     <Folder Include="Models\User\" />
     <Folder Include="ViewModels\Restaurant\" />
     <Folder Include="Models\ConfirmCode\" />
     <Folder Include="Utils\Database\" />
+    <Folder Include="Services\Mail\" />
+    <Folder Include="Utils\Mail\" />
+    <Folder Include="Services\User\" />
+    <Folder Include="Services\Restaurant\" />
+    <Folder Include="Services\Auth\" />
   </ItemGroup>
 </Project>

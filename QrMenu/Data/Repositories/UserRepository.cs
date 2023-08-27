@@ -5,14 +5,14 @@ namespace QrMenu.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IMongoCollection<User> users;
+        private readonly IMongoCollection<UserDatabaseModel> users;
 
         public UserRepository(IMongoDatabase database)
         {
-            this.users = database.GetCollection<User>("users"); ;
+            this.users = database.GetCollection<UserDatabaseModel>("users"); ;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<UserDatabaseModel>> GetAllUsers()
         {
             var userlist = await users.Find(r => true).ToListAsync();
 
@@ -21,7 +21,7 @@ namespace QrMenu.Data.Repositories
             return userlist;
         }
 
-        public async Task<User> GetUserById(string id)
+        public async Task<UserDatabaseModel> GetUserById(string id)
         {
             var user = await users.Find(u => u.Id == id).FirstOrDefaultAsync();
 
@@ -31,7 +31,7 @@ namespace QrMenu.Data.Repositories
 
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<UserDatabaseModel> GetUserByEmail(string email)
         {
             var user = await users.Find(u => u.Email == email).FirstOrDefaultAsync();
 
@@ -40,7 +40,7 @@ namespace QrMenu.Data.Repositories
             return user;
         }
 
-        public async Task<User> AddUser(User user)
+        public async Task<UserDatabaseModel> AddUser(UserDatabaseModel user)
         {
             try
             {
@@ -59,13 +59,13 @@ namespace QrMenu.Data.Repositories
             return deleteUser.IsAcknowledged;
         }
 
-        public async Task<bool> UpdateUser(string id, User user)
+        public async Task<bool> UpdateUser(string id, UserDatabaseModel user)
         {
             var updateUser = await users.ReplaceOneAsync(u => u.Id == id, user);
             return updateUser.IsAcknowledged;
         }
 
-        public async Task<User> GetUserByUsername(string username)
+        public async Task<UserDatabaseModel> GetUserByUsername(string username)
         {
             var user = await users.Find(u => u.Username == username).FirstOrDefaultAsync();
 

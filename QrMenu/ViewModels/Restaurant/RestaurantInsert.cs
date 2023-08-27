@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QrMenu.Models.Restaurant
+namespace QrMenu.ViewModels.Restaurant
 {
     public class RestaurantInsert
     {
@@ -10,6 +10,6 @@ namespace QrMenu.Models.Restaurant
         public string Website { get; set; }
         [Required]
         public string MenuLink { get; set; }
-	}
+    }
 }
 

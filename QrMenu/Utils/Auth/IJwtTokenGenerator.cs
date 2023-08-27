@@ -1,10 +1,10 @@
-﻿using QrMenu.Models.Auth;
-using QrMenu.Models.User;
+﻿using QrMenu.Models.User;
+using QrMenu.ViewModels.Auth;
 
 namespace QrMenu.Utils.Auth
 {
     public interface IJwtTokenGenerator
     {
-        GenerateTokenResponse GenerateToken(User user);
+        GenerateTokenResponse GenerateToken(UserDatabaseModel user);
     }
 }

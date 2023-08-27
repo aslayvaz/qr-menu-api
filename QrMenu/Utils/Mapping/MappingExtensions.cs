@@ -15,15 +15,15 @@ namespace QrMenu.Utils.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 //users
-                cfg.CreateMap<User, UserView>();
-                cfg.CreateMap<UserInsert, User>();
-                cfg.CreateMap<User, UserLoginResponse>();
-                cfg.CreateMap<UserRegisterRequest, User>();
-                cfg.CreateMap<User, UserRegisterResponse>();
+                cfg.CreateMap<UserDatabaseModel, UserView>();
+                cfg.CreateMap<UserInsert, UserDatabaseModel>();
+                cfg.CreateMap<UserDatabaseModel, UserLoginResponse>();
+                cfg.CreateMap<UserRegisterRequest, UserDatabaseModel>();
+                cfg.CreateMap<UserDatabaseModel, UserRegisterResponse>();
 
                 // restaurants
-                cfg.CreateMap<RestaurantInsert, Restaurant>();
-                cfg.CreateMap<Restaurant, RestaurantView>();
+                cfg.CreateMap<RestaurantInsert, RestaurantDatabaseModel>();
+                cfg.CreateMap<RestaurantDatabaseModel, RestaurantView>();
 
                 //Add more mappings as needed
             });

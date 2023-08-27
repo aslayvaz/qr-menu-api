@@ -5,14 +5,14 @@ namespace QrMenu.Data.Repositories
 {
     public class RestaurantRepository : IRestaurantRepository
     {
-        private readonly IMongoCollection<Restaurant> restaurants;
+        private readonly IMongoCollection<RestaurantDatabaseModel> restaurants;
 
         public RestaurantRepository(IMongoDatabase database)
         {
-            restaurants = database.GetCollection<Restaurant>("restaurants");
+            restaurants = database.GetCollection<RestaurantDatabaseModel>("restaurants");
         }
 
-        public async Task<List<Restaurant>> GetAllRestaurants()
+        public async Task<List<RestaurantDatabaseModel>> GetAllRestaurants()
         {
             var restaurantList = await restaurants.Find(r => true).ToListAsync();
 
@@ -21,7 +21,7 @@ namespace QrMenu.Data.Repositories
             return restaurantList;
         }
 
-        public async Task<Restaurant> GetRestaurant(string id)
+        public async Task<RestaurantDatabaseModel> GetRestaurant(string id)
         {
             var restaurant = await restaurants.Find(u => u.Id == id).FirstOrDefaultAsync();
 
@@ -30,7 +30,7 @@ namespace QrMenu.Data.Repositories
             return restaurant;
         }
 
-        public async Task<Restaurant> AddRestaurant(Restaurant restaurant)
+        public async Task<RestaurantDatabaseModel> AddRestaurant(RestaurantDatabaseModel restaurant)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace QrMenu.Data.Repositories
             return restaurant;
         }
 
-        public async Task<bool> UpdateRestaurant(string id, Restaurant restaurant)
+        public async Task<bool> UpdateRestaurant(string id, RestaurantDatabaseModel restaurant)
         {
             var updateResult = await restaurants.ReplaceOneAsync(r => r.Id == id, restaurant);
             return updateResult.IsAcknowledged;
@@ -55,7 +55,7 @@ namespace QrMenu.Data.Repositories
             return deleteResult.IsAcknowledged;
         }
 
-        public async Task<Restaurant> GetRestaurantByName(string name)
+        public async Task<RestaurantDatabaseModel> GetRestaurantByName(string name)
         {
             var restaurant = await restaurants.Find(u => u.Name == name).FirstOrDefaultAsync();
 
@@ -66,7 +66,7 @@ namespace QrMenu.Data.Repositories
 
         public async Task<bool> RemoveAllRestaurant()
         {
-            var deleteResult = await restaurants.DeleteManyAsync(Builders<Restaurant>.Filter.Empty);
+            var deleteResult = await restaurants.DeleteManyAsync(Builders<RestaurantDatabaseModel>.Filter.Empty);
             return deleteResult.IsAcknowledged;
         }
     }
