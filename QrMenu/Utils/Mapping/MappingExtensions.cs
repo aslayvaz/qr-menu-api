@@ -14,11 +14,17 @@ namespace QrMenu.Utils.Mapping
         {
             var config = new MapperConfiguration(cfg =>
             {
+                //users
                 cfg.CreateMap<User, UserView>();
                 cfg.CreateMap<UserInsert, User>();
                 cfg.CreateMap<User, UserLoginResponse>();
+                cfg.CreateMap<UserRegisterRequest, User>();
+                cfg.CreateMap<User, UserRegisterResponse>();
+
+                // restaurants
                 cfg.CreateMap<RestaurantInsert, Restaurant>();
                 cfg.CreateMap<Restaurant, RestaurantView>();
+
                 //Add more mappings as needed
             });
 

@@ -39,6 +39,7 @@ namespace QrMenu.Services
             return (await userRepository.GetUserByEmail(email)).Map<User, UserView>();
 
         }
+
         public async Task<bool> AddUser(UserInsert insertModel)
         {
             var existUser = await userRepository.GetUserByUsername(insertModel.Username);
@@ -49,9 +50,13 @@ namespace QrMenu.Services
 
             user.Password = passwordHasher.HashPassword(user.Password);
 
-            user.CreateDate = System.DateTime.Now.TrimMilliseconds();
+            user.CreateDate = DateTime.Now.TrimMilliseconds();
+            user.IsActive = true;
+            user.IsMailConfirmed = true;
 
-            return await userRepository.AddUser(user);
+            var insertUser = await userRepository.AddUser(user);
+
+            return insertUser == null;
         }
 
         public async Task<bool> UpdateUser(string id, User user)
@@ -63,7 +68,6 @@ namespace QrMenu.Services
         {
             return await userRepository.RemoveUser(id);
         }
-
     }
 }
 

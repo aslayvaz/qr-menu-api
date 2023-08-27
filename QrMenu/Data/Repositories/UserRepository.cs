@@ -40,7 +40,7 @@ namespace QrMenu.Data.Repositories
             return user;
         }
 
-        public async Task<bool> AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             try
             {
@@ -48,9 +48,9 @@ namespace QrMenu.Data.Repositories
             }
             catch
             {
-                return false;
+                return null;
             }
-            return true;
+            return user;
         }
 
         public async Task<bool> RemoveUser(string id)

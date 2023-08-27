@@ -42,6 +42,8 @@
     <None Remove="Models\Restaurant\" />
     <None Remove="Models\User\" />
     <None Remove="ViewModels\Restaurant\" />
+    <None Remove="Models\ConfirmCode\" />
+    <None Remove="Utils\Database\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -58,5 +60,7 @@
     <Folder Include="Models\Restaurant\" />
     <Folder Include="Models\User\" />
     <Folder Include="ViewModels\Restaurant\" />
+    <Folder Include="Models\ConfirmCode\" />
+    <Folder Include="Utils\Database\" />
   </ItemGroup>
 </Project>

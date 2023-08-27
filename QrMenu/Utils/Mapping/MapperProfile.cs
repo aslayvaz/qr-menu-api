@@ -35,6 +35,16 @@ namespace QrMenu.Utils.Mapping
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.IsAdmin ? "Admin" : "User")) // TODO FIX
                 .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => src.CreateDate));
 
+            CreateMap<UserRegisterRequest, User>()
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
+            CreateMap<User, UserRegisterResponse>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.Username))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email));
+
             // Restaurant
 
             CreateMap<RestaurantInsert, Restaurant>()

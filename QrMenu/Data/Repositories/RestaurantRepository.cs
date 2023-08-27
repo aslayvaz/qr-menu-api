@@ -35,8 +35,6 @@ namespace QrMenu.Data.Repositories
             try
             {
                 await restaurants.InsertOneAsync(restaurant);
-
-
             }
             catch
             {

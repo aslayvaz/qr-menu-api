@@ -19,16 +19,21 @@ namespace QrMenu.Models.User
         public string? Email { get; set; }
 
         [BsonElement("isAdmin")]
-        public bool IsAdmin { get; set; }
+        public bool IsAdmin { get; set; } = false;
 
         [BsonElement("isActive")]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = false;
+
+        [BsonElement("isMailConfirmed")]
+        public bool IsMailConfirmed { get; set; } = false;
 
         [BsonElement("create_date")]
-        public DateTime? CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; } = DateTime.Now;
 
         [BsonElement("last_edit_date")]
         public DateTime? LastEditDate { get; set; }
+
+
 
     }
 

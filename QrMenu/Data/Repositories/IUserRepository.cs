@@ -7,7 +7,7 @@ namespace QrMenu.Data.Repositories
         Task<List<User>> GetAllUsers();
         Task<User> GetUserById(string id);
         Task<User> GetUserByEmail(string email);
-        Task<bool> AddUser(User User);
+        Task<User> AddUser(User User);
         Task<bool> UpdateUser(string id, User User);
         Task<bool> RemoveUser(string id);
         Task<User> GetUserByUsername(string username);
