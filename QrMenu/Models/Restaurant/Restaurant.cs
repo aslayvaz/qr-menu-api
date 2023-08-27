@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-namespace QrMenu.Models
+
+namespace QrMenu.Models.Restaurant
 {
 
     public class Restaurant
@@ -39,6 +40,9 @@ namespace QrMenu.Models
 
         [BsonElement("description")]
         public string? Description { get; set; }
+
+        [BsonElement("create_date")]
+        public DateTime CreateTime { get; set; }
     }
 
 }

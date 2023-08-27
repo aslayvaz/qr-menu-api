@@ -1,5 +1,4 @@
-﻿using System;
-using QrMenu.Models;
+﻿using QrMenu.Models.User;
 using QrMenu.ViewModels.User;
 
 namespace QrMenu.Services

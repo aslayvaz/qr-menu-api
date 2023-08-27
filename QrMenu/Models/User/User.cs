@@ -1,8 +1,7 @@
-﻿using System;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace QrMenu.Models
+namespace QrMenu.Models.User
 {
     public class User
     {

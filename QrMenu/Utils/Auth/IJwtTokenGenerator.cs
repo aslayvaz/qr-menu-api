@@ -1,5 +1,5 @@
-﻿using QrMenu.Models;
-using QrMenu.Models.Auth;
+﻿using QrMenu.Models.Auth;
+using QrMenu.Models.User;
 
 namespace QrMenu.Utils.Auth
 {

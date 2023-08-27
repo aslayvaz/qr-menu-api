@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QrMenu.Models;
+using QrMenu.Models.Restaurant;
 using QrMenu.Services;
 
 namespace QrMenu.Controllers
@@ -8,8 +8,8 @@ namespace QrMenu.Controllers
     [Authorize(Roles = "admin")]
     [ApiController]
     [Route("api/[controller]")]
-    public class RestaurantController:ControllerBase
-	{
+    public class RestaurantController : ControllerBase
+    {
         private readonly IRestaurantService restaurantService;
 
         public RestaurantController(IRestaurantService restaurantService)
@@ -37,10 +37,11 @@ namespace QrMenu.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Restaurant restaurant)
+        public async Task<IActionResult> Add([FromBody] RestaurantInsert restaurant)
         {
-            await restaurantService.AddRestaurant(restaurant);
-            return CreatedAtAction(nameof(Get), new { id = restaurant.Id }, restaurant);
+            var addedRestaurant = await restaurantService.AddRestaurant(restaurant);
+
+            return CreatedAtAction(nameof(Get), new { id = addedRestaurant.Id }, addedRestaurant);
         }
 
         [HttpPut("{id}")]

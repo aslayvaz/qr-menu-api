@@ -1,5 +1,4 @@
-﻿using System;
-using QrMenu.Models;
+﻿using QrMenu.Models.Restaurant;
 
 namespace QrMenu.Data.Repositories
 {
@@ -7,9 +6,10 @@ namespace QrMenu.Data.Repositories
     {
         Task<List<Restaurant>> GetAllRestaurants();
         Task<Restaurant> GetRestaurant(string id);
-        Task<bool> AddRestaurant(Restaurant restaurant);
+        Task<Restaurant> AddRestaurant(Restaurant restaurant);
         Task<bool> UpdateRestaurant(string id, Restaurant restaurant);
         Task<bool> RemoveRestaurant(string id);
+        Task<Restaurant> GetRestaurantByName(string name);
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
-using QrMenu.Models;
+using QrMenu.Models.User;
+
 namespace QrMenu.Data.Repositories
 {
     public class UserRepository : IUserRepository

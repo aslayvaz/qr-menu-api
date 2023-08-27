@@ -1,5 +1,5 @@
 ﻿using QrMenu.Data.Repositories;
-using QrMenu.Models;
+using QrMenu.Models.User;
 using QrMenu.Utils;
 using QrMenu.Utils.Auth;
 using QrMenu.Utils.Mapping;
@@ -41,7 +41,7 @@ namespace QrMenu.Services
         }
         public async Task<bool> AddUser(UserInsert insertModel)
         {
-            var user = insertModel.Map<UserInsert,User>();
+            var user = insertModel.Map<UserInsert, User>();
 
             user.Password = passwordHasher.HashPassword(user.Password);
 

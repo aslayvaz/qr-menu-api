@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QrMenu.Models;
+using QrMenu.Models.User;
 using QrMenu.Services;
 using QrMenu.ViewModels.User;
 

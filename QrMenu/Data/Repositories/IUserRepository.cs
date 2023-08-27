@@ -1,4 +1,4 @@
-﻿using QrMenu.Models;
+﻿using QrMenu.Models.User;
 
 namespace QrMenu.Data.Repositories
 {

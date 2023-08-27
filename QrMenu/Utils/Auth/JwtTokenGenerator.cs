@@ -2,8 +2,8 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using QrMenu.Models;
 using QrMenu.Models.Auth;
+using QrMenu.Models.User;
 
 namespace QrMenu.Utils.Auth
 {

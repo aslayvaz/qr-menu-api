@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using QrMenu.Models;
+using QrMenu.Models.Restaurant;
+using QrMenu.Models.User;
 using QrMenu.ViewModels.User;
 
 namespace QrMenu.Utils.Mapping
@@ -14,8 +15,8 @@ namespace QrMenu.Utils.Mapping
             {
                 cfg.CreateMap<User, UserView>();
                 cfg.CreateMap<UserInsert, User>();
-                cfg.CreateMap<User, UserLoginResponse>(); 
-                //cfg.CreateMap<Restaurant, RestaurantViewModel>();
+                cfg.CreateMap<User, UserLoginResponse>();
+                cfg.CreateMap<RestaurantInsert, Restaurant>();
                 //Add more mappings as needed
             });
 

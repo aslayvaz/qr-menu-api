@@ -1,5 +1,5 @@
 ﻿using QrMenu.Data.Repositories;
-using QrMenu.Models;
+using QrMenu.Models.User;
 using QrMenu.Utils.Auth;
 using QrMenu.Utils.Mapping;
 using QrMenu.ViewModels.User;

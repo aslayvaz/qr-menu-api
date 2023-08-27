@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using QrMenu.Models;
+using QrMenu.Models.Restaurant;
 
 namespace QrMenu.Data.Repositories
 {
@@ -30,18 +30,19 @@ namespace QrMenu.Data.Repositories
             return restaurant;
         }
 
-        public async Task<bool> AddRestaurant(Restaurant restaurant)
+        public async Task<Restaurant> AddRestaurant(Restaurant restaurant)
         {
             try
             {
                 await restaurants.InsertOneAsync(restaurant);
 
+
             }
             catch
             {
-                return false;
+                return null;
             }
-            return true;
+            return restaurant;
         }
 
         public async Task<bool> UpdateRestaurant(string id, Restaurant restaurant)
@@ -54,6 +55,15 @@ namespace QrMenu.Data.Repositories
         {
             var deleteResult = await restaurants.DeleteOneAsync(r => r.Id == id);
             return deleteResult.IsAcknowledged;
+        }
+
+        public async Task<Restaurant> GetRestaurantByName(string name)
+        {
+            var restaurant = await restaurants.Find(u => u.RestaurantName == name).FirstOrDefaultAsync();
+
+            if (restaurant is null) return null;
+
+            return restaurant;
         }
     }
 }
