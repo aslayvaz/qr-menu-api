@@ -19,6 +19,7 @@ namespace QrMenu.Data.Repositories
             if (confirmCode is null) return null;
 
             return confirmCode;
+            
         }
 
         public async Task<ConfirmCode> InsertConfirmCode(ConfirmCode confirmCode)
